@@ -56,7 +56,7 @@ menu = """
     """
 
 
-def Operacao_Deposito(valor_saldo, limite_maximo_transacoes):
+def Operacao_Deposito(valor_saldo, extrato, limite_maximo_transacoes, /):
     while True:    
         valor = input("Digite o valor a ser depositado: ")
         try:
@@ -81,7 +81,7 @@ def Operacao_Deposito(valor_saldo, limite_maximo_transacoes):
             print("Valor digitado inválido.")
             input("Pressione Enter para continuar...")
 
-def Operacao_Saque(valor_saldo, limite_maximo_saque, limite_maximo_transacoes):
+def Operacao_Saque(*, valor_saldo, limite_maximo_saque, limite_maximo_transacoes):
     while True:
         valor = input("Digite o valor desejado para saque: ")        
         try:
@@ -121,7 +121,7 @@ def Operacao_Saque(valor_saldo, limite_maximo_saque, limite_maximo_transacoes):
             input("Pressione Enter para continuar...")
         return valor_saldo, limite_maximo_saque, limite_maximo_transacoes, extrato
 
-def Operacao_Extrato(lista_extrato, valor_saldo):
+def Operacao_Extrato(valor_saldo, /, *, lista_extrato):
     print("#"*20, " EXTRATO ", "#"*20)
     print("-"*41)
     print("NÂO HOUVE MOVIMENTAÇÂO" if not lista_extrato else lista_extrato)
@@ -134,7 +134,7 @@ def Operacao_Criar_usuario(lista_cpf):
     numero_Cpf = input("Digite somente os numeros do CPF: ")
     if lista_cpf.count(numero_Cpf) == 0:
         nome = input("Digite o nome do cliente: ")
-        data_nascimento = input("Digite a data de nascimento: ")
+        data_nascimento = input("Digite a data de nascimento (dd/mm/aaaa): ")
         logradouro = input("Digite o Logradouro: ")
         bairro = input("Digite o Bairro: ")
         cidade = input("Digite o nome da Cidade: ")
@@ -304,34 +304,34 @@ while True:
         print("Valor inválido. Digite um número válido.")
         continue
 
-    if opcao == 1:
-        valor_saldo, limite_maximo_transacoes = Operacao_Deposito(valor_saldo, extrato, limite_maximo_transacoes)
+    if opcao == 1: # Operação Depósito
+        valor_saldo, extrato, limite_maximo_transacoes = Operacao_Deposito(valor_saldo, extrato, limite_maximo_transacoes)
         if limite_maximo_transacoes >= 0:
             lista_extrato += extrato
         limpar_terminal()
-    elif opcao == 2:
+    elif opcao == 2: # Operação Saque
         valor_saldo, limite_maximo_saque, limite_maximo_transacoes, extrato = Operacao_Saque(valor_saldo=valor_saldo, limite_maximo_saque=limite_maximo_saque, limite_maximo_transacoes=limite_maximo_transacoes)
         if limite_maximo_transacoes >= 0:
             lista_extrato += extrato
         limpar_terminal()
-    elif opcao == 3:
+    elif opcao == 3: # Operação Extrato
         Operacao_Extrato(valor_saldo, lista_extrato=lista_extrato)
         limpar_terminal()
-    elif opcao == 4:
+    elif opcao == 4: # Operação Criar Extrato
         novo_usuario = Operacao_Criar_usuario(lista_cpf)
         if novo_usuario is not None:
             usuarios.append(novo_usuario)
             lista_cpf = [item[0] for item in usuarios]
             lista_usuarios = [item[1] for item in usuarios]
         limpar_terminal()
-    elif opcao == 5:
+    elif opcao == 5: # Operação Listar Usuários
         Operacao_listar_usuarios(usuarios)
         limpar_terminal()
-    elif opcao == 6:
+    elif opcao == 6: # Operação Criar Conta
         Operacao_criar_conta(usuarios, contas)
-    elif opcao == 7:
+    elif opcao == 7: # Operação Listar contas
         Operacao_listar_contas(contas)
-    elif opcao == 8:
+    elif opcao == 8: # Operação Menu Final
         print(menu_final)
         break
     else:
