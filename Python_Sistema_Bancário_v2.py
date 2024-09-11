@@ -212,7 +212,7 @@ def gerar_numero_conta(contas):
 
 def criar_conta(usuario, contas):
     numero_conta = gerar_numero_conta(contas)
-    agencia = "001"
+    agencia = "0001"
 
     conta = {
         "cpf": usuario[0],
