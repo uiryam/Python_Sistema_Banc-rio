@@ -1,7 +1,7 @@
 #SISTEMA DO BANCO DO WILL
 import os
 from datetime import datetime
-from abc import ABC, abstractclassmethod, abstractproperty
+from abc import ABC, abstractproperty
 
 opcao = 0
 menu_inicial = """
